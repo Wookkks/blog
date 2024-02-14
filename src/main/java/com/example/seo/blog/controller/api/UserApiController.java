@@ -22,10 +22,13 @@ public class UserApiController {
 
     @PostMapping("/user/api/join")
     @ResponseBody
-    public ResponseDto join(@RequestBody User user) throws NoSuchAlgorithmException {
-        log.info(user.toString());
-        userService.join(user);
-        return new ResponseDto("success", "회원가입이 완료되었습니다.");
+    public ResponseDto join(@RequestBody User user) {
+        try{
+            userService.join(user);
+            return new ResponseDto("success", "회원가입이 완료되었습니다.");
+        }catch (Exception e){
+            return new ResponseDto("failure", "회원가입에 실패하였습니다.");
+        }
     }
     @PostMapping("/user/api/idCheck")
     @ResponseBody
@@ -61,17 +64,25 @@ public class UserApiController {
     @PutMapping("/user/api/update/{id}")
     @ResponseBody
     public ResponseDto userUpdate(@RequestBody UserDto userDto, @PathVariable int id) {
-        User user = userService.findById(id).orElseThrow(()->new IllegalArgumentException("회원을 찾을 수 없습니다."));
-        user.setName(userDto.getName());
-        user.setEmail(userDto.getEmail());
-        user.setPassword(user.getPassword());
-        userService.update(user);
-        return new ResponseDto("success", "수정이 완료되었습니다.");
+        try{
+            User user = userService.findById(id).orElseThrow(()->new IllegalArgumentException("회원을 찾을 수 없습니다."));
+            user.setName(userDto.getName());
+            user.setEmail(userDto.getEmail());
+            user.setPassword(user.getPassword());
+            userService.update(user);
+            return new ResponseDto("success", "수정이 완료되었습니다.");
+        }catch (Exception e){
+            return new ResponseDto("failure", "수정에 실패하였습니다.");
+        }
     }
     @DeleteMapping("/user/api/withdraw/{id}")
     public ResponseDto userWithdraw(@PathVariable int id) {
-        User withDrawUser = userService.findById(id).orElseThrow(()->new IllegalArgumentException("회원을 찾을 수 없습니다."));
-        userService.withDraw(id);
-        return new ResponseDto("success", "탈퇴가 완료되었습니다. 서비스를 이용해 주셔서 감사합니다.");
+        try{
+            userService.findById(id).orElseThrow(()->new IllegalArgumentException("회원을 찾을 수 없습니다."));
+            userService.withDraw(id);
+            return new ResponseDto("success", "탈퇴가 완료되었습니다. 서비스를 이용해 주셔서 감사합니다.");
+        }catch (Exception e) {
+            return new ResponseDto("failure", "에러가 발생하였습니다. 관리자에게 문의해주세요.");
+        }
     }
 }
