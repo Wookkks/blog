@@ -42,7 +42,6 @@ public class UserApiController {
     @ResponseBody
     public ResponseDto loginCheck(@RequestBody UserDto userDto, HttpSession session) {
         PrivateKey privateKey = (PrivateKey) session.getAttribute(RSAUtil.PRIVATE_KEY);
-//        session.removeAttribute(RSAUtil.PRIVATE_KEY);
         if(privateKey == null) {
             throw new RuntimeException("암호화 비밀키 정보를 찾을 수 없습니다.");
         }
@@ -51,11 +50,11 @@ public class UserApiController {
             String username = userDto.getUsername();
 
             String encryptedPassword = userDto.getPassword();
-            String password = RSAUtil.decryptRSA(userDto.getPassword(), privateKey);
+            String decryptedPassword = RSAUtil.decryptRSA(userDto.getPassword(), privateKey);
 
             log.info("username : " + username);
-            log.info("password : " + password);
             log.info("encryptedPassword : " + encryptedPassword);
+            log.info("decryptedPassword : " + decryptedPassword);
 
             User loginUser = userService.findUser(username, encryptedPassword);
             session.setAttribute("userId", loginUser.getId());

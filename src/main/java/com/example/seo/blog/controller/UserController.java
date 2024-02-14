@@ -56,19 +56,16 @@ public class UserController {
 
     @GetMapping("/user/login")
     public String loginForm(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception{
+        // 키쌍 생성
+        KeyPair keys = RSAUtil.genKey();
+        // 개인키 세션에 저장
+        request.getSession().setAttribute(RSAUtil.PRIVATE_KEY, keys.getPrivate());
+        // 여기서 생성된 공개키를 전달. 전달된 공개키는 문자열로 변환
+        Map<String, String> spec = RSAUtil.getKeySpec(keys.getPublic());
 
-        if(session.getAttribute(RSAUtil.PRIVATE_KEY) == null) {
-            // 키쌍 생성
-            KeyPair keys = RSAUtil.genKey();
-            // 개인키 세션에 저장
-            request.getSession().setAttribute(RSAUtil.PRIVATE_KEY, keys.getPrivate());
-            // 여기서 생성된 공개키를 전달. 전달된 공개키는 문자열로 변환
-            Map<String, String> spec = RSAUtil.getKeySpec(keys.getPublic());
-
-            request.setAttribute(RSAUtil.PUBLIC_KEY_MODULUS, spec.get(RSAUtil.PUBLIC_KEY_MODULUS));
-            request.setAttribute(RSAUtil.PUBLIC_KEY_EXPONENT, spec.get(RSAUtil.PUBLIC_KEY_EXPONENT));
-            request.setAttribute(RSAUtil.PUBLIC_KEY, keys.getPublic());
-        }
+        request.setAttribute(RSAUtil.PUBLIC_KEY_MODULUS, spec.get(RSAUtil.PUBLIC_KEY_MODULUS));
+        request.setAttribute(RSAUtil.PUBLIC_KEY_EXPONENT, spec.get(RSAUtil.PUBLIC_KEY_EXPONENT));
+        request.setAttribute(RSAUtil.PUBLIC_KEY, keys.getPublic());
 
         return "/user/login";
     }
