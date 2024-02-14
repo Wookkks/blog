@@ -126,7 +126,6 @@ $(document.readyState, function () {
 
         let password = $('#password').val();
         let encryptedPassword = encryptRSA(password);
-        console.log(encryptedPassword);
 
         let data = {
             username: $('#username').val(),

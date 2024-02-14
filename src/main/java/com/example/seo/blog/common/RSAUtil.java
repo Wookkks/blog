@@ -1,5 +1,7 @@
 package com.example.seo.blog.common;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +26,6 @@ public class RSAUtil {
     public final static String PUBLIC_KEY = "publicKey";
     public final static String PUBLIC_KEY_MODULUS = "publicKeyModulus";
     public final static String PUBLIC_KEY_EXPONENT = "publicKeyExponent";
-    
     
     // 1024비트 RSA 키쌍 생성
     public static KeyPair genKey() throws NoSuchAlgorithmException {
