@@ -10,7 +10,9 @@ import javax.crypto.NoSuchPaddingException;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.security.*;
+import java.security.spec.InvalidKeySpecException;
 import java.security.spec.RSAPublicKeySpec;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,9 +21,9 @@ public class RSAUtil {
     protected final static Logger LOGGER = LoggerFactory.getLogger(RSAUtil.class);
 
     public final static String PRIVATE_KEY = "privateKey";
-    public final static String PUBLIC_KEY = "publicKey" ;
-    public final static String PUBLIC_KEY_MODULUS = "publicKeyModulus" ;
-    public final static String PUBLIC_KEY_EXPONENT = "publicKeyExponent" ;
+    public final static String PUBLIC_KEY = "publicKey";
+    public final static String PUBLIC_KEY_MODULUS = "publicKeyModulus";
+    public final static String PUBLIC_KEY_EXPONENT = "publicKeyExponent";
     
     
     // 1024비트 RSA 키쌍 생성
@@ -31,20 +33,16 @@ public class RSAUtil {
         gen.initialize(1024, secureRandom);
         return gen.genKeyPair();
     }
-    
     public static Map<String, String> getKeySpec(PublicKey publicKey) {
         Map<String, String> spec = new HashMap<>();
-
         try {
             KeyFactory keyFactory = KeyFactory.getInstance("RSA");
             RSAPublicKeySpec publicSpec = keyFactory.getKeySpec(publicKey, RSAPublicKeySpec.class);
             spec.put(RSAUtil.PUBLIC_KEY_MODULUS, publicSpec.getModulus().toString(16));
             spec.put(RSAUtil.PUBLIC_KEY_EXPONENT, publicSpec.getPublicExponent().toString(16));
-
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
         }
-
         return spec;
     }
 
