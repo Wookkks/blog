@@ -16,7 +16,7 @@ import java.util.Map;
 
 public class RSAUtil {
 
-    protected final static Logger log = LoggerFactory.getLogger(RSAUtil.class);
+    protected final static Logger LOGGER = LoggerFactory.getLogger(RSAUtil.class);
 
     public final static String PRIVATE_KEY = "privateKey";
     public final static String PUBLIC_KEY = "publicKey" ;
@@ -42,7 +42,7 @@ public class RSAUtil {
             spec.put(RSAUtil.PUBLIC_KEY_EXPONENT, publicSpec.getPublicExponent().toString(16));
 
         } catch (Exception e) {
-            log.error(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
 
         return spec;
@@ -62,7 +62,7 @@ public class RSAUtil {
             decrypted = new String(decryptedBytes, StandardCharsets.UTF_8);
 
         } catch (Exception e) {
-            log.error(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
         return decrypted;
     }

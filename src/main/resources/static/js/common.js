@@ -63,17 +63,22 @@ $(document.readyState, function () {
             return false;
         }
 
-        // let username = $('#username').val();
-        // let password = $('#password').val();
-        // let encryptedUsername = encryptRSA(username);
-        // let encryptedPassword = encryptRSA(password);
+        let password = $('#password').val();
+        let encryptedPassword = encryptRSA(password);
 
         let data = {
-            name: $('#username').val(),
+            name: $('#name').val(),
             username: $('#username').val(),
             email: $('#email').val(),
-            password: $('#password').val(),
-        };
+            password: encryptedPassword,
+        }
+
+        // let data = {
+        //     name: $('#name').val(),
+        //     username: $('#username').val(),
+        //     email: $('#email').val(),
+        //     password: $('#password').val(),
+        // };
 
         console.log(data);
 
