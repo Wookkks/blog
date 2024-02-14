@@ -11,7 +11,6 @@
 <div class="container">
     <input type="hidden" id="RSAModulus" name="RSAModulus" value="${publicKeyModulus}" />
     <input type="hidden" id="RSAExponent" name="RSAExponent" value="${publicKeyExponent}" />
-
     <form>
         <div class="mb-3">
             <label class="form-label" for="username">아이디</label>
@@ -22,6 +21,8 @@
             <input class="form-control" type="password" name="password" id="password" autocomplete="off"/>
         </div>
     </form>
+    <p class="msg" id="capslockMsg" style="display: none;">CapsLock이 켜져 있습니다.</p>
+
     <div class="col text-center">
         <button class="btn btn-primary" id="btn-login" type="button">로그인</button>
         <button class="btn btn-secondary" type="button" onclick="history.back()">취소</button>

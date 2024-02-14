@@ -25,6 +25,7 @@ public class UserApiController {
     public ResponseDto join(@RequestBody User user) {
         try{
             userService.join(user);
+            log.info(user.toString());
             return new ResponseDto("success", "회원가입이 완료되었습니다.");
         }catch (Exception e){
             return new ResponseDto("failure", "회원가입에 실패하였습니다.");
@@ -41,17 +42,22 @@ public class UserApiController {
     @ResponseBody
     public ResponseDto loginCheck(@RequestBody UserDto userDto, HttpSession session) {
         PrivateKey privateKey = (PrivateKey) session.getAttribute(RSAUtil.PRIVATE_KEY);
-        session.removeAttribute(RSAUtil.PRIVATE_KEY);
-
+//        session.removeAttribute(RSAUtil.PRIVATE_KEY);
         if(privateKey == null) {
             throw new RuntimeException("암호화 비밀키 정보를 찾을 수 없습니다.");
         }
+
         try {
-            String username = RSAUtil.decryptRSA(userDto.getUsername(), privateKey);
+            String username = userDto.getUsername();
+
+            String encryptedPassword = userDto.getPassword();
             String password = RSAUtil.decryptRSA(userDto.getPassword(), privateKey);
+
             log.info("username : " + username);
             log.info("password : " + password);
-            User loginUser = userService.findUser(username, password);
+            log.info("encryptedPassword : " + encryptedPassword);
+
+            User loginUser = userService.findUser(username, encryptedPassword);
             session.setAttribute("userId", loginUser.getId());
             return new ResponseDto("success", loginUser.getName() + "님 환영합니다.");
 

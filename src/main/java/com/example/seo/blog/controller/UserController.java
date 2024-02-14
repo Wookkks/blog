@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.security.InvalidKeyException;
-import java.security.KeyPair;
-import java.security.NoSuchAlgorithmException;
+import java.security.*;
 import java.util.List;
 import java.util.Map;
 
@@ -41,14 +39,13 @@ public class UserController {
 
     @GetMapping("/user/join")
     public String joinForm(HttpServletRequest request, HttpServletResponse response) throws NoSuchAlgorithmException, InvalidKeyException {
-//        request.getSession().removeAttribute(RSAUtil.PRIVATE_KEY);
-//        KeyPair keys = RSAUtil.genKey();
-//        request.getSession().setAttribute(RSAUtil.PRIVATE_KEY, keys.getPrivate());
-//        Map<String, String> spec = RSAUtil.getKeySpec(keys.getPublic());
-//        request.setAttribute(RSAUtil.PUBLIC_KEY_MODULUS, spec.get(RSAUtil.PUBLIC_KEY_MODULUS));
-//        request.setAttribute(RSAUtil.PUBLIC_KEY_EXPONENT, spec.get(RSAUtil.PUBLIC_KEY_EXPONENT));
-//        request.setAttribute(RSAUtil.PUBLIC_KEY, keys.getPublic());
-
+        request.getSession().removeAttribute(RSAUtil.PRIVATE_KEY);
+        KeyPair keys = RSAUtil.genKey();
+        request.getSession().setAttribute(RSAUtil.PRIVATE_KEY, keys.getPrivate());
+        Map<String, String> spec = RSAUtil.getKeySpec(keys.getPublic());
+        request.setAttribute(RSAUtil.PUBLIC_KEY_MODULUS, spec.get(RSAUtil.PUBLIC_KEY_MODULUS));
+        request.setAttribute(RSAUtil.PUBLIC_KEY_EXPONENT, spec.get(RSAUtil.PUBLIC_KEY_EXPONENT));
+        request.setAttribute(RSAUtil.PUBLIC_KEY, keys.getPublic());
         return "user/join";
     }
 
@@ -56,21 +53,22 @@ public class UserController {
 //    public String loginForm() {
 //        return "/user/login";
 //    }
+
     @GetMapping("/user/login")
     public String loginForm(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception{
-        // session 사전 제거
-        request.getSession().removeAttribute(RSAUtil.PRIVATE_KEY);
-        KeyPair keys = RSAUtil.genKey(); // 키쌍 생성
 
-        // 개인키 세션에 저장
-        request.getSession().setAttribute(RSAUtil.PRIVATE_KEY, keys.getPrivate());
+        if(session.getAttribute(RSAUtil.PRIVATE_KEY) == null) {
+            // 키쌍 생성
+            KeyPair keys = RSAUtil.genKey();
+            // 개인키 세션에 저장
+            request.getSession().setAttribute(RSAUtil.PRIVATE_KEY, keys.getPrivate());
+            // 여기서 생성된 공개키를 전달. 전달된 공개키는 문자열로 변환
+            Map<String, String> spec = RSAUtil.getKeySpec(keys.getPublic());
 
-        // 여기서 생성된 공개키를 전달. 전달된 공개키는 문자열로 변환
-        Map<String, String> spec = RSAUtil.getKeySpec(keys.getPublic());
-
-        request.setAttribute(RSAUtil.PUBLIC_KEY_MODULUS, spec.get(RSAUtil.PUBLIC_KEY_MODULUS));
-        request.setAttribute(RSAUtil.PUBLIC_KEY_EXPONENT, spec.get(RSAUtil.PUBLIC_KEY_EXPONENT));
-        request.setAttribute(RSAUtil.PUBLIC_KEY, keys.getPublic());
+            request.setAttribute(RSAUtil.PUBLIC_KEY_MODULUS, spec.get(RSAUtil.PUBLIC_KEY_MODULUS));
+            request.setAttribute(RSAUtil.PUBLIC_KEY_EXPONENT, spec.get(RSAUtil.PUBLIC_KEY_EXPONENT));
+            request.setAttribute(RSAUtil.PUBLIC_KEY, keys.getPublic());
+        }
 
         return "/user/login";
     }
