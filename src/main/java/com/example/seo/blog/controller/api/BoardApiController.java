@@ -1,3 +1,4 @@
+
 package com.example.seo.blog.controller.api;
 
 import com.example.seo.blog.common.FileRegist;
@@ -44,42 +45,63 @@ public class BoardApiController {
     }
     @DeleteMapping("/board/api/{id}")
     public ResponseDto deleteById(@PathVariable int id) {
-        boardService.deleteBoard(id);
-        return new ResponseDto("success", "삭제가 완료되었습니다.");
+        try{
+            boardService.deleteBoard(id);
+            return new ResponseDto("success", "삭제가 완료되었습니다.");
+        }catch (Exception e) {
+            return new ResponseDto("failure", "삭제가 실패하였습니다.");
+        }
+
     }
     @PostMapping("/board/api/deleteImg/{id}")
     public ResponseDto deleteImgById(@PathVariable int id){
-        boardService.deleteImg(id);
-        return new ResponseDto("success", "이미지가 삭제되었습니다.");
+        try{
+            boardService.deleteImg(id);
+            return new ResponseDto("success", "이미지가 삭제되었습니다.");
+        }catch (Exception e) {
+            return new ResponseDto("failure", "이미지 삭제에 실패하였습니다.");
+        }
     }
     @PostMapping("/board/api/replyWrite")
     public ResponseDto replyWrite(@RequestBody ReplyDto replyDto){
-        boardService.replyWrite(replyDto);
-        return new ResponseDto("success", "댓글이 등록되었습니다.");
+        try{
+            boardService.replyWrite(replyDto);
+            return new ResponseDto("success", "댓글이 등록되었습니다.");
+        }catch (Exception e){
+            return new ResponseDto("failure", "댓글 등록에 실패하였습니다.");
+        }
     }
     @DeleteMapping("/board/api/replyDelete/{id}")
     public ResponseDto replyDelete(@PathVariable int id){
-        boardService.replyDelete(id);
-        return new ResponseDto("success", "댓글이 삭제되었습니다.");
+        try{
+            boardService.replyDelete(id);
+            return new ResponseDto("success", "댓글이 삭제되었습니다.");
+        }catch (Exception e) {
+            return new ResponseDto("failure", "댓글 삭제에 실패하였습니다.");
+        }
     }
-
     @PutMapping("/board/api/{id}")
     public ResponseDto update(
             @PathVariable int id,
             @RequestPart(value = "boardDTO") BoardDto boardDTO,
             @RequestPart(value = "file", required = false) MultipartFile file) throws IOException {
-        Board board = boardService.findById(id);
-        log.info(boardDTO.toString());
-        if(file != null && !file.isEmpty()) {
-            FileRegist register = new FileRegist(file);
-            board.setFilePath(register.getFilePath());
-            board.setFileName(register.getFileName());
+        try{
+            Board board = boardService.findById(id);
+
+            if(file != null && !file.isEmpty()) {
+                FileRegist register = new FileRegist(file);
+                board.setFilePath(register.getFilePath());
+                board.setFileName(register.getFileName());
+            }
+            board.setCategory(boardDTO.getCategory());
+            board.setTitle(boardDTO.getTitle());
+            board.setContent(boardDTO.getContent());
+
+            boardService.updateBoard(board);
+            return new ResponseDto("success", "글 수정이 완료되었습니다.");
+
+        }catch (Exception e) {
+            return new ResponseDto("failure", "글 수정에 실패하였습니다.");
         }
-        board.setCategory(boardDTO.getCategory());
-        board.setTitle(boardDTO.getTitle());
-        board.setContent(boardDTO.getContent());
-        log.info(board.toString());
-        boardService.updateBoard(board);
-        return new ResponseDto("success", "글 수정이 완료되었습니다.");
     }
 }

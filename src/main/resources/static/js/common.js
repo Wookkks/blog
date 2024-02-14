@@ -33,7 +33,7 @@ $(document.readyState, function () {
                 $('#id_already').css("display", "none");
             }
         }).fail(function (err) {
-            console.log("에러 발생! " + err)
+            console.log("에러가 발생하였습니다. " + err)
         })
     })
 
@@ -90,14 +90,13 @@ $(document.readyState, function () {
             dataType: "json",
         }).done(function (res) {
             if(res.code === 'success'){
-                alert('회원가입이 완료되었습니다.');
+                alert(res.message);
                 location.href = "/";
             } else {
-                alert('오류가 발생하였습니다.');
+                alert(res.message);
             }
         }).fail(function (err) {
-            alert("회원가입이 실패하였습니다.");
-            alert(err);
+            alert('에러가 발생하였습니다.' + err);
         })
 
     })
@@ -147,7 +146,6 @@ $(document.readyState, function () {
     })
 
     $('#btn-update').on('click', function (){
-        console.log('common.js 업데이트?')
         let id = $('#id').val();
 
         let data = {
@@ -184,7 +182,6 @@ $(document.readyState, function () {
     $('#withdraw').on('click', function (){
         if(confirm('회원 탈퇴를 하시겠습니까?')) {
             let userId = $('#id').val();
-            console.log(userId);
 
             $.ajax({
                 type: 'delete',
@@ -204,7 +201,6 @@ $(document.readyState, function () {
             })
         }
     })
-
     function ajaxRequestApi(type, url, datatype, message) {
         $.ajax({
             type: type,
