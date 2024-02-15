@@ -84,15 +84,6 @@ $(document.readyState, function () {
             password: encryptedPassword,
         }
 
-        // let data = {
-        //     name: $('#name').val(),
-        //     username: $('#username').val(),
-        //     email: $('#email').val(),
-        //     password: $('#password').val(),
-        // };
-
-        console.log(data);
-
         $.ajax({
             type: "POST",
             url: "/user/api/join",
@@ -131,9 +122,6 @@ $(document.readyState, function () {
             username: $('#username').val(),
             password: encryptedPassword
         }
-
-        console.log(data.username);
-        console.log(data.password);
 
         $.ajax({
             type: "POST",
@@ -210,20 +198,4 @@ $(document.readyState, function () {
             })
         }
     })
-    function ajaxRequestApi(type, url, datatype, message) {
-        $.ajax({
-            type: type,
-            url: url,
-            datatype: datatype,
-        }).done(function (res){
-            if(res.code === 'success'){
-                alert(message);
-            } else {
-                alert('오류가 발생하였습니다.');
-            }
-        }).fail(function (err){
-            alert(err.toString());
-        })
-
-    }
 })

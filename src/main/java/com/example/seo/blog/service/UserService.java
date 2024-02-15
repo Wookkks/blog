@@ -1,5 +1,6 @@
 package com.example.seo.blog.service;
 
+import com.example.seo.blog.dto.UserDto;
 import com.example.seo.blog.model.User;
 
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.Optional;
 
 public interface UserService {
 
-    void join(User user);
+    void join(UserDto userDto);
     Optional<User> findById(int id);
     List<User> findAll();
     int idCheck(String username) ;
@@ -17,4 +18,5 @@ public interface UserService {
     User findUser(String username, String password);
     void update(User user);
     void withDraw(int id);
+    String findSalt(String username);
 }

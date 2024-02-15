@@ -1,5 +1,6 @@
 package com.example.seo.blog.service;
 
+import com.example.seo.blog.dto.UserDto;
 import com.example.seo.blog.model.User;
 import com.example.seo.blog.mybatis.UserMapper;
 import com.example.seo.blog.repository.UserRepository;
@@ -20,8 +21,8 @@ public class UserServiceImpl implements UserService{
     private final UserMapper userMapper;
     private final UserRepository userRepository;
 
-    public void join(User user) {
-        userRepository.join(user);
+    public void join(UserDto userDto) {
+        userRepository.join(userDto);
     }
     @Override
     public Optional<User> findById(int id) {
@@ -54,9 +55,12 @@ public class UserServiceImpl implements UserService{
     public void update(User user) {
         userRepository.update(user);
     }
-
     @Override
     public void withDraw(int id) {
         userRepository.withDraw(id);
+    }
+    @Override
+    public String findSalt(String username) {
+        return userRepository.findSalt(username);
     }
 }

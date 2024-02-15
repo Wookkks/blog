@@ -1,5 +1,6 @@
 package com.example.seo.blog.repository;
 
+import com.example.seo.blog.dto.UserDto;
 import com.example.seo.blog.model.User;
 import com.example.seo.blog.mybatis.UserMapper;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +22,8 @@ public class UserRepository implements UserMapper {
         return userMapper.findById(id);
     }
     @Override
-    public void join(User user) {
-        userMapper.join(user);
+    public void join(UserDto userDto) {
+        userMapper.join(userDto);
     }
     @Override
     public List<User> findAll() {
@@ -56,5 +57,10 @@ public class UserRepository implements UserMapper {
     @Override
     public void withDraw(int id) {
         userMapper.withDraw(id);
+    }
+
+    @Override
+    public String findSalt(String username) {
+        return userMapper.findSalt(username);
     }
 }

@@ -12,6 +12,7 @@ public class UserDto {
     private String username;
     private String email;
     private String password;
+    private String salt;
 
     @Override
     public String toString() {
@@ -21,6 +22,7 @@ public class UserDto {
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", salt='" + salt + '\'' +
                 '}';
     }
 }
