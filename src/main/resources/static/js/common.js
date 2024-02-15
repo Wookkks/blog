@@ -48,6 +48,34 @@ $(document.readyState, function () {
         })
     })
 
+    $('#email-check').click(function () {
+        let email = $('#email').val();
+
+        if(email.length === 0) {
+            alert('이메일을 입력해주세요');
+            return false;
+        }
+
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "/user/api/emailCheck",
+            data: email,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+        }).done(function (count) {
+            if(count > 0) {
+                $('#email_already').css("display", "inline-block");
+                $('#email_ok').css("display", "none");
+            } else {
+                $('#email_ok').css("display", "inline-block");
+                $('#email_already').css("display", "none");
+            }
+        }).fail(function (err) {
+            console.log("에러가 발생하였습니다. " + err)
+        })
+    })
+
     $('#btn-join').click(function () {
 
         if ($('#name').val().length === 0) {
@@ -73,6 +101,12 @@ $(document.readyState, function () {
             $('#username').focus();
             return false;
         }
+        if($('#email_ok').css('display') !== 'inline-block') {
+            alert('이메일 중복확인을 해주세요.');
+            $('#email').focus();
+            return false;
+        }
+
 
         let password = $('#password').val();
         let encryptedPassword = encryptRSA(password);

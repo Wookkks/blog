@@ -2,7 +2,6 @@ package com.example.seo.blog.service;
 
 import com.example.seo.blog.dto.UserDto;
 import com.example.seo.blog.model.User;
-import com.example.seo.blog.mybatis.UserMapper;
 import com.example.seo.blog.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +17,6 @@ import java.util.Optional;
 @Slf4j
 public class UserServiceImpl implements UserService{
 
-    private final UserMapper userMapper;
     private final UserRepository userRepository;
 
     public void join(UserDto userDto) {
@@ -33,6 +31,10 @@ public class UserServiceImpl implements UserService{
     }
     public int idCheck(String username) {
         return userRepository.idCheck(username);
+    }
+    @Override
+    public int emailCheck(String email) {
+        return userRepository.emailCheck(email);
     }
     public int loginCheck(User user) {
         return userRepository.loginCheck(user);
