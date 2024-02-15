@@ -8,17 +8,6 @@ $(document.readyState, function () {
         rsa.setPublic(rsaPublicKeyModulus, rsaPublicKeyExponent);
         return rsa.encrypt(plain);
     }
-    function capslock(e){
-        let keyCode = 0;
-        let shiftKey = false;
-        keyCode = e.keyCode;
-        shiftKey = e.shiftKey;
-        if(((keyCode >= 65 && keyCode <= 90) && !shiftKey) || ((keyCode >= 97 && keyCode <= 122) && shiftKey)){
-            $("#capslockMsg").css("display","block");
-        }else{
-            $("#capslockMsg").css("display","none");
-        }
-    }
 
     $('#id-check').click(function () {
         let id = $('#username').val();
@@ -42,6 +31,34 @@ $(document.readyState, function () {
             } else {
                 $('#id_ok').css("display", "inline-block");
                 $('#id_already').css("display", "none");
+            }
+        }).fail(function (err) {
+            console.log("에러가 발생하였습니다. " + err)
+        })
+    })
+
+    $('#email-check').click(function () {
+        let email = $('#email').val();
+
+        if(email.length === 0) {
+            alert('이메일을 입력해주세요');
+            return false;
+        }
+
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "/user/api/emailCheck",
+            data: email,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+        }).done(function (count) {
+            if(count > 0) {
+                $('#email_already').css("display", "inline-block");
+                $('#email_ok').css("display", "none");
+            } else {
+                $('#email_ok').css("display", "inline-block");
+                $('#email_already').css("display", "none");
             }
         }).fail(function (err) {
             console.log("에러가 발생하였습니다. " + err)
@@ -73,6 +90,12 @@ $(document.readyState, function () {
             $('#username').focus();
             return false;
         }
+        if($('#email_ok').css('display') !== 'inline-block') {
+            alert('이메일 중복확인을 해주세요.');
+            $('#email').focus();
+            return false;
+        }
+
 
         let password = $('#password').val();
         let encryptedPassword = encryptRSA(password);

@@ -14,6 +14,7 @@ public interface UserMapper {
     void join(UserDto userDto);
     List<User> findAll();
     int idCheck(String username);
+    int emailCheck(String email);
     int loginCheck(User user);
     int getTotalCount();
     List<User> getUserList(Map<String, Object> params);

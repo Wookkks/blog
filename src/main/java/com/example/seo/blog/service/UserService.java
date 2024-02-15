@@ -11,8 +11,8 @@ public interface UserService {
     void join(UserDto userDto);
     Optional<User> findById(int id);
     List<User> findAll();
-    int idCheck(String username) ;
-    int loginCheck(User user);
+    int idCheck(String username);
+    int emailCheck(String email);
     int getTotalCount();
     List<User> getUserList(int currentPage, int size);
     User findUser(String username, String password);
