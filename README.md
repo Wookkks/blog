@@ -66,10 +66,10 @@ create table reply(
     regDate timestamp default CURRENT_TIMESTAMP null,
     boardId int                                 not null,
     constraint reply_board_FK
-        foreign key (boardId) references mybatis_db.board (id)
+        foreign key (boardId) references board (id)
             on delete cascade,
     constraint reply_user_FK
-        foreign key (userId) references mybatis_db.user (id)
+        foreign key (userId) references user (id)
             on delete cascade
 );
 
