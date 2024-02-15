@@ -33,8 +33,8 @@
         DELETE FROM user WHERE id = #{id}
     </delete>
 
-    <select id="findAll" resultType="User">
-        SELECT id, name, email FROM user ORDER BY id DESC
+    <select id="findAll" resultType="com.example.seo.blog.vo.UserVo">
+        SELECT id, name, username, email FROM user ORDER BY id DESC
     </select>
 
     <select id="idCheck" parameterType="String" resultType="integer">
