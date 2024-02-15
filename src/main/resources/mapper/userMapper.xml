@@ -41,6 +41,10 @@
         SELECT COUNT(*) FROM user WHERE username = #{username}
     </select>
 
+    <select id="emailCheck" parameterType="String" resultType="integer">
+        SELECT COUNT(*) FROM user WHERE email = #{email}
+    </select>
+
     <select id="findById" resultType="User">
         SELECT * FROM user WHERE id = #{id}
     </select>

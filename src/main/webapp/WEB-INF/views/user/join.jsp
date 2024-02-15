@@ -5,8 +5,15 @@
         color:#008000;
         display: none;
     }
-
     #id_already{
+        color:#6A82FB;
+        display: none;
+    }
+    #email_ok{
+        color:#008000;
+        display: none;
+    }
+    #email_already{
         color:#6A82FB;
         display: none;
     }
@@ -24,6 +31,7 @@
         <div class="form-floating mb-3">
             <label for="username">아이디</label>
             <input type="text" class="form-control" id="username" name="username" placeholder="아이디를 입력해주세요" required>
+            <button class="btn btn-primary btn-sm" style="margin-top: 5px;" id="id-check" type="button" @click="idCheck()">아이디 중복확인</button>
             <br>
             <span id="id_ok">사용 가능한 아이디 입니다.</span>
             <span id="id_already">중복된 아이디 입니다.</span>
@@ -31,6 +39,9 @@
         <div class="form-floating mb-3">
             <label for="email">이메일</label>
             <input type="email" class="form-control" id="email" name="email" placeholder="이메일을 입력해주세요" required>
+            <button class="btn btn-primary btn-sm" style="margin-top: 5px;" id="email-check" type="button" @click="emailCheck()">이메일 중복확인</button>
+            <span id="email_ok">사용 가능한 이메일 입니다.</span>
+            <span id="email_already">중복된 이메일 입니다.</span>
         </div>
         <div class="form-floating mb-3">
             <label for="password">비밀번호</label>
@@ -38,7 +49,7 @@
         </div>
     </form>
         <div class="col text-center">
-            <button class="btn btn-primary" id="id-check" type="button" @click="idCheck()">아이디 중복확인</button>
+
             <button class="btn btn-primary" id="btn-join" type="button" @click="join()">회원가입</button>
             <button class="btn btn-secondary" type="button" onclick="history.back()">취소</button>
         </div>

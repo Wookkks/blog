@@ -49,6 +49,13 @@ public class UserApiController {
         count = userService.idCheck(username);
         return count;
     }
+    @PostMapping("/user/api/emailCheck")
+    @ResponseBody
+    public int emailCheck(@RequestBody String email) {
+        int count = 0;
+        count = userService.emailCheck(email);
+        return count;
+    }
     @PostMapping("/user/api/login")
     @ResponseBody
     public ResponseDto loginCheck(@RequestBody UserDto userDto, HttpSession session) {

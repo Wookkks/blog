@@ -34,6 +34,11 @@ public class UserRepository implements UserMapper {
         return userMapper.idCheck(username);
     }
     @Override
+    public int emailCheck(String email) {
+        return userMapper.emailCheck(email);
+    }
+
+    @Override
     public int loginCheck(User user) {
         return userMapper.loginCheck(user);
     }
