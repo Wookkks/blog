@@ -4,7 +4,6 @@ import com.example.seo.blog.common.Paging;
 import com.example.seo.blog.common.RSAUtil;
 import com.example.seo.blog.model.User;
 import com.example.seo.blog.service.UserService;
-import com.example.seo.blog.vo.UserVo;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -29,10 +28,10 @@ public class UserController {
 
     @GetMapping({"", "/"})
     public String index(Model model, @RequestParam(defaultValue = "1") int currentPage, @RequestParam(defaultValue = "5") int size) {
-        List<UserVo> users = userService.findAll();
+        List<User> users = userService.findAll();
         int totalCount = userService.getTotalCount();
         List<User> userList = userService.getUserList(currentPage, size);
-        Paging<UserVo> paging = new Paging<>(totalCount, currentPage, 5, size, users);
+        Paging<User> paging = new Paging<>(totalCount, currentPage, 5, size, users);
         model.addAttribute("userList", userList);
         model.addAttribute("paging", paging);
         return "index";

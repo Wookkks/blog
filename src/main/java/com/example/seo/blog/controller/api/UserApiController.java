@@ -6,15 +6,12 @@ import com.example.seo.blog.dto.ResponseDto;
 import com.example.seo.blog.dto.UserDto;
 import com.example.seo.blog.model.User;
 import com.example.seo.blog.service.UserService;
-import com.example.seo.blog.vo.UserVo;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.PrivateKey;
-import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -104,9 +101,5 @@ public class UserApiController {
         } catch (Exception e) {
             return new ResponseDto("failure", "에러가 발생하였습니다. 관리자에게 문의해주세요.");
         }
-    }
-    @GetMapping("/user/api/users")
-    public List<UserVo> users() {
-        return userService.findAll();
     }
 }

@@ -3,7 +3,6 @@ package com.example.seo.blog.repository;
 import com.example.seo.blog.dto.UserDto;
 import com.example.seo.blog.model.User;
 import com.example.seo.blog.mybatis.UserMapper;
-import com.example.seo.blog.vo.UserVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
@@ -27,7 +26,7 @@ public class UserRepository implements UserMapper {
         userMapper.join(userDto);
     }
     @Override
-    public List<UserVo> findAll() {
+    public List<User> findAll() {
         return  userMapper.findAll();
     }
     @Override

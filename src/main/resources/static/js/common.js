@@ -8,6 +8,17 @@ $(document.readyState, function () {
         rsa.setPublic(rsaPublicKeyModulus, rsaPublicKeyExponent);
         return rsa.encrypt(plain);
     }
+    function capslock(e){
+        let keyCode = 0;
+        let shiftKey = false;
+        keyCode = e.keyCode;
+        shiftKey = e.shiftKey;
+        if(((keyCode >= 65 && keyCode <= 90) && !shiftKey) || ((keyCode >= 97 && keyCode <= 122) && shiftKey)){
+            $("#capslockMsg").css("display","block");
+        }else{
+            $("#capslockMsg").css("display","none");
+        }
+    }
 
     $('#id-check').click(function () {
         let id = $('#username').val();

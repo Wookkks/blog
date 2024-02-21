@@ -3,7 +3,6 @@ package com.example.seo.blog.service;
 import com.example.seo.blog.dto.UserDto;
 import com.example.seo.blog.model.User;
 import com.example.seo.blog.repository.UserRepository;
-import com.example.seo.blog.vo.UserVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -27,7 +26,7 @@ public class UserServiceImpl implements UserService{
     public Optional<User> findById(int id) {
         return userRepository.findById(id);
     }
-    public List<UserVo> findAll() {
+    public List<User> findAll() {
         return userRepository.findAll();
     }
     public int idCheck(String username) {
